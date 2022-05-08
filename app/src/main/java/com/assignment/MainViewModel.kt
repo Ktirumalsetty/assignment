@@ -11,15 +11,15 @@ class MainViewModel:ViewModel() {
 
             add(MainModel.Header(title = "Section One"))
             add(MainModel.Content(R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_foreground, com.google.android.material.R.drawable.ic_clock_black_24dp))
+                R.drawable.ic_launcher_foreground, R.drawable.img_profile_doc))
 
             add(MainModel.Header(title = "Section Two"))
             add(MainModel.Content(R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_foreground, com.google.android.material.R.drawable.ic_clock_black_24dp))
+                R.drawable.ic_launcher_foreground, R.drawable.patient))
 
             add(MainModel.Header(title = "Section Three"))
             add(MainModel.Content(R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_foreground, com.google.android.material.R.drawable.ic_clock_black_24dp))
+                R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_background))
 
             add(MainModel.Header(title = "Section Four"))
             add(MainModel.Content(R.drawable.ic_launcher_background,

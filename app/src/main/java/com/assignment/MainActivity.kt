@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.assignment.RecyclerItemDecoration.SectionCallback
 import com.assignment.databinding.ActivityMainBinding
+import com.assignment.model.MainModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,8 +19,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val recyclerItemDecoration = RecyclerItemDecoration(this, resources.getDimensionPixelSize(R.dimen.header_height), true, getSectionCallback(dataList))
+        val dataList = viewModel.getMainMockData()
+        val recyclerItemDecoration = RecyclerItemDecoration(this,
+            resources.getDimensionPixelSize(R.dimen.header_height), true, getSectionCallback(dataList))
         mainAdapter.setData(viewModel.getMainMockData())
+
         binding.rvMultiType.apply {
             this.adapter = mainAdapter
 //            this.addItemDecoration(recyclerItemDecoration)
@@ -27,15 +31,39 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getSectionCallback(list: ArrayList<HashMap<String, String>>): SectionCallback? {
+    private fun getSectionCallback(list: List<MainModel>): SectionCallback? {
         return object : SectionCallback {
             override fun isSection(pos: Int): Boolean {
-                return pos == 0 || list[pos]["Title"] !== list[pos - 1]["Title"]
+                val mainModel = list[pos]
+                val mainModelPrev = list[pos-1]
+
+                var title =""
+                var titlePrev =""
+
+                if (mainModel is MainModel.Header){
+                    title = (mainModel as MainModel.Header).title
+                }
+                if (mainModelPrev is MainModel.Header){
+                    titlePrev = (mainModelPrev as MainModel.Header).title
+                }
+
+
+//                when(val  mainModel = list[pos]){
+//                    is MainModel.Header ->{
+//                        return (mainModel as MainModel.Header).title
+//                    }
+//                }
+                return pos == 0 || title !== titlePrev
             }
 
             override fun getSectionHeaderName(pos: Int): String {
-                val dataMap = list[pos]
-                return dataMap["Title"]!!
+                when(val  mainModel = list[pos]){
+                    is MainModel.Header ->{
+                        return (mainModel as MainModel.Header).title
+                    }
+                }
+                return ""
+//                return dataMap["Title"]!!
             }
         }
     }
